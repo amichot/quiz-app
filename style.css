@@ -9,31 +9,24 @@
   html {
     font: 80% 'Roboto', helvetica, sans-serif;
   }
-  
-  body {
-    padding-left: 1.8rem;
-  }
 
 .banner {
     text-align: center;
 }
 
-.quiz-form fieldset {
-    padding: 0;
-    margin-left: 0;
-    margin-right: 0;
-    margin-bottom: 0;
-    border: none;
-  }
-
-  .quiz-form {
+  .start-container {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-content: center;
     background: #efefef;
     margin: 2rem auto;
     padding: 1rem;
-    max-width: 20rem;
+    max-width: 25rem;
+  }
+
+  .text {
+      text-align: center;
   }
 
   .start-button-container {
