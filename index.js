@@ -120,26 +120,55 @@ const questions = [
     }
 ];
 
-function generateItemElement(item, itemIndex, template) {
-    return ``
+
+
+function generateItemElement(items, questionNumber) {
+    return `
+        <p>"${items.question}"</p>
+        <div>
+            <input type="radio" id="a" value="a" name="question"${questionNumber}"">
+            <label for="choice1">"${items.answers.a}"</label>
+        </div>
+        <div>
+            <input type="radio" id="b" value="b" name="question"${questionNumber}"">
+            <label for="choice2">"${items.answers.b}"</label>
+        </div>
+        <div>
+            <input type="radio" id="c" value="c" name="question"${questionNumber}"">
+            <label for="choice3">"${items.answers.c}"</label>
+        </div>
+        <div>
+            <input type="radio" id="d" value="d" name="question"${questionNumber}"">
+            <label for="choice4">"${items.answers.d}"</label>
+        </div>
+    `
 }
 
-function generateQuestionsString(questions) {
+function generateQuestionsString(questions, questionNumber) {
     console.log("generating quesetions");
 
-    const items = questions.map((item, index) => generateItemElement(item, index));
-
-    return items.join("");
+    const items = questions[questionNumber - 1];
+        const currentQuestion = generateItemElement(items, questionNumber)
+    return currentQuestion;
 }
 
 function renderQuizQuestions() {
-    console.log('`renderShoppingList` ran');
-    const questionString = generateQuestionsString(questions);
-    $('.js-quiz-form').html(questionString);
+    console.log("`renderShoppingList` ran");
+    let questionNumber = 1;
+    const questionString = generateQuestionsString(questions, questionNumber);
+    $(".js-quiz").html(questionString);
+    questionNumber ++;
+}
+
+function handleStartQuiz() {
+    $(".js-button-container").on("click", `.js-start-button`, event => {
+        console.log("`handleStartQuiz` ran");
+        renderQuizQuestions();
+    } )
 }
 
 function handleQuiz() {
-    renderQuizQuestions();
+    handleStartQuiz();
 }
 
 $(handleQuiz);
