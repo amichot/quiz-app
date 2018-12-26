@@ -20,7 +20,7 @@
     justify-content: center;
     align-content: center;
     background: #efefef;
-    margin: 2rem auto;
+    margin: 2rem auto 1rem auto;
     padding: 1rem;
     max-width: 25rem;
   }
@@ -33,6 +33,7 @@
       display: flex;
       justify-content: center;
       align-content: center;
+      padding-top: 1rem;
   }
 
   .hidden {
@@ -52,7 +53,7 @@
 
     .button {
         height: 30px;
-        width: 90px;
+        width: 120px;
     }
     
   }
@@ -63,6 +64,6 @@
 
     .button {
         height: 40px;
-        width: 100px;
+        width: 130px;
     }
   }

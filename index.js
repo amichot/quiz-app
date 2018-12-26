@@ -142,6 +142,10 @@ function generateItemElement(items, questionNumber) {
             <input type="radio" id="d" value="d" name="question${questionNumber}">
             <label for="choice4">${items.answers.d}</label>
         </div>
+
+        <div class="button-container">
+            <button class="button" type="submit">Submit Answer</button>
+        </div>
     `
 }
 
@@ -171,9 +175,13 @@ function handleStartQuiz() {
 function hideElements() {
     $(".js-button-container").on("click", `.js-start-button`, event => {
         console.log("`hideElements` ran");
-        $(".js-start-button").addClass("hidden");
+        $(".js-button-container").addClass("hidden");
         $(".text").addClass("hidden");
     } )
+}
+
+function handleAnswers() {
+    //leaving off point
 }
 
 
@@ -181,6 +189,7 @@ function hideElements() {
 function handleQuiz() {
     handleStartQuiz();
     hideElements();
+    handleAnswers();
 }
 
 $(handleQuiz);
