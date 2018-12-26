@@ -35,6 +35,16 @@
       align-content: center;
   }
 
+  .hidden {
+      display: none;
+  }
+
+  .questionNumber {
+      display: block;
+      text-align: center;
+      padding-bottom: 1rem;
+  }
+
   @media(min-width: 400px) {
     html {
         font-size: 100%;

@@ -124,22 +124,23 @@ const questions = [
 
 function generateItemElement(items, questionNumber) {
     return `
-        <p>"${items.question}"</p>
+        <span class="questionNumber">Question ${questionNumber} of 10</span>
+        <p>${items.question}</p>
         <div>
-            <input type="radio" id="a" value="a" name="question"${questionNumber}"">
-            <label for="choice1">"${items.answers.a}"</label>
+            <input type="radio" id="a" value="a" name="question${questionNumber}">
+            <label for="choice1">${items.answers.a}</label>
         </div>
         <div>
-            <input type="radio" id="b" value="b" name="question"${questionNumber}"">
-            <label for="choice2">"${items.answers.b}"</label>
+            <input type="radio" id="b" value="b" name="question${questionNumber}">
+            <label for="choice2">${items.answers.b}</label>
         </div>
         <div>
-            <input type="radio" id="c" value="c" name="question"${questionNumber}"">
-            <label for="choice3">"${items.answers.c}"</label>
+            <input type="radio" id="c" value="c" name="question${questionNumber}">
+            <label for="choice3">${items.answers.c}</label>
         </div>
         <div>
-            <input type="radio" id="d" value="d" name="question"${questionNumber}"">
-            <label for="choice4">"${items.answers.d}"</label>
+            <input type="radio" id="d" value="d" name="question${questionNumber}">
+            <label for="choice4">${items.answers.d}</label>
         </div>
     `
 }
@@ -167,8 +168,19 @@ function handleStartQuiz() {
     } )
 }
 
+function hideElements() {
+    $(".js-button-container").on("click", `.js-start-button`, event => {
+        console.log("`hideElements` ran");
+        $(".js-start-button").addClass("hidden");
+        $(".text").addClass("hidden");
+    } )
+}
+
+
+
 function handleQuiz() {
     handleStartQuiz();
+    hideElements();
 }
 
 $(handleQuiz);
