@@ -1,4 +1,4 @@
-function myQuiz() {
+
 
 
 
@@ -139,35 +139,38 @@ let answersRight = 0;
 
 
 function generateItemElement(items, questionNumber) {
-    console.log(questionNumber)
+    console.log("generatingItemElements");
     return `
-        <span class="questionNumber">Question ${questionNumber} of 10</span>
-        <p>${items.question}</p>
-        <div>
-            <input type="radio" id="a" value="a" name="question${questionNumber}">
-            <label for="choice1">${items.answers.a}</label>
-        </div>
-        <div>
-            <input type="radio" id="b" value="b" name="question${questionNumber}">
-            <label for="choice2">${items.answers.b}</label>
-        </div>
-        <div>
-            <input type="radio" id="c" value="c" name="question${questionNumber}">
-            <label for="choice3">${items.answers.c}</label>
-        </div>
-        <div>
-            <input type="radio" id="d" value="d" name="question${questionNumber}">
-            <label for="choice4">${items.answers.d}</label>
-        </div>
+        <div class="js-remove">
+            <span class="questionNumber">Question ${questionNumber} of 10</span>
+            <span class="questionNumber">Answered Correct: ${answersRight} of ${questionNumber - 1}</span>
+            <p>${items.question}</p>
+            <div>
+                <input type="radio" id="a" value="a" name="question${questionNumber}">
+                <label for="choice1">${items.answers.a}</label>
+            </div>
+            <div>
+                <input type="radio" id="b" value="b" name="question${questionNumber}">
+                <label for="choice2">${items.answers.b}</label>
+            </div>
+            <div>
+                <input type="radio" id="c" value="c" name="question${questionNumber}">
+                <label for="choice3">${items.answers.c}</label>
+            </div>
+            <div>
+                <input type="radio" id="d" value="d" name="question${questionNumber}">
+                <label for="choice4">${items.answers.d}</label>
+            </div>
 
-        <div class="button-container js-quizButton-container">
-            <button class="button js-button" type="submit">Submit Answer</button>
+            <div class="button-container js-quizButton-container">
+                <button class="button js-button" type="submit">Submit Answer</button>
+            </div>
         </div>
     `
 }
 
 function generateQuestionsString(questions, questionNumber) {
-    console.log("generating quesetions");
+    console.log("generating questions");
 
     const items = questions[questionNumber - 1];
         const currentQuestion = generateItemElement(items, questionNumber)
@@ -175,59 +178,132 @@ function generateQuestionsString(questions, questionNumber) {
 }
 
 function renderQuizQuestions() {
+    console.log("`renderQuizQuestions` ran");
     questionNumber ++;
-    console.log("`renderShoppingList` ran");
+    console.log(questionNumber)
+    if (questionNumber > 10) {
+        HandlequizEnd();
+    }
+    else {
     const questionString = generateQuestionsString(questions, questionNumber);
-    $(".js-quiz").html(questionString);
-    
+    $(".js-container").html(questionString);
+    }
 }
 
 function handleStartQuiz() {
-    $(".js-button-container").on("click", `.js-start-button`, event => {
+    $(".js-container").on("click", `.js-start-button`, event => {
         console.log("`handleStartQuiz` ran");
+        removeElements();
         renderQuizQuestions();
     } )
 }
 
-function hideElements() {
-    $(".js-button-container").on("click", `.js-start-button`, event => {
-        console.log("`hideElements` ran");
-        $(".js-button-container").addClass("hidden");
-        $(".text").addClass("hidden");
-    } )
+function removeElements() {
+        console.log("`removeElements` ran");
+        $(".js-remove").remove();
 }
 
-function generateAnswer(userAnswer) {
-
+function generateAnswer(response) {
+    return `
+        <div class="js-remove">
+            <p>${response}</p>
+            <div class="button-container js-quizButton-container">
+                <button class="button js-start-button" type="button">Next Question</button>
+            </div>
+        </div>
+    `
 }
 
-function checkAnswer(userAnswer) {
+function getAnswer(userAnswer) {
     const question = questions[questionNumber - 1];
-    let response = `Sorry! The correct answer is ${question.correctAnswer}! `
+    let response = `Sorry! The correct answer is ${question.correctAnswer}! ${question.answerText}`
     if (question.correctAnswer === userAnswer) {
-        let response = "CORRECT!";
+        answersRight += 1;
+        response = `CORRECT! ${question.answerText}`;
     }
+    const currentAnswer = generateAnswer(response)
+    removeElements();
+    $(".js-container").html(currentAnswer);
 }
 
 function handleAnswers() {
     $(".js-container").on("click", `.js-button`, function(event) {
         console.log("`handleAnswers` ran");
         let userAnswer = $(`input[name=question${questionNumber}]:checked`).val()
-        const answer = checkAnswer(userAnswer);
+        const answer = getAnswer(userAnswer);
     })
     
+}
+
+function generateQuizEnd(message) {
+    return `
+        <div class="js-remove">
+            <p>${message}</p>
+            <div class="button-container js-quizButton-container">
+                <button class="button js-retake-button" type="button">Retake Quiz</button>
+            </div>
+        </div>
+    `
+}
+
+function finalStatement() {
+    let percentRight = answersRight * 10;
+    let message = `You got ${percentRight}% of your questions right, Well now you know some new football facts!`;
+    if (percentRight === 100) {
+        message = `Amazing! You are an NFL Guru!!! You got ${percentRight}% of your questions right, CONGRATULATIONS MIGHTY ONE!`;
+    }
+
+    else if (percentRight >= 80) {
+        message = `The force appears to be with you. You got ${percentRight}% of your questions right, CoNgRaTuLaTiOnS!`;
+    }
+
+    else if (percentRight >= 60) {
+        message = `You got ${percentRight}% of your questions right, good job!`;
+    }
+
+    else if (percentRight >= 40) {
+        message = `You got ${percentRight}% of your questions right, better luck next time!`;
+    }
+    const endingStatement = generateQuizEnd(message);
+    $(".js-container").html(endingStatement);
+}
+
+function HandlequizEnd() {
+    finalStatement();
+}
+
+function generateStartScreen() {
+    return `
+    <div class="js-remove">
+        <h2 class="text">Answer ten multiple choice questions on the 2017 NFL season to see if you are a real
+        football guru!</h2>
+        <div class="button-container js-button-container">
+        <button class="button js-start-button" type="button">Start Quiz</button>
+    </div>
+
+    </div>
+    `
+}
+
+function retakeQuiz() {
+        $(".js-container").on("click", `.js-retake-button`, function(event) {
+            console.log("`retakeQuiz` ran");
+            questionNumber = 0;
+            answersRight = 0;
+            removeElements();
+            const startScreen = generateStartScreen();
+            $(".js-container").html(startScreen);
+        })
 }
 
 
 
 function handleQuiz() {
     handleStartQuiz();
-    hideElements();
     handleAnswers();
+    retakeQuiz();
 }
 
 $(handleQuiz);
 
-}
 
-$(myQuiz);
