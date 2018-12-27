@@ -248,7 +248,7 @@ function generateQuizEnd(message) {
 
 function finalStatement() {
     let percentRight = answersRight * 10;
-    let message = `You got ${percentRight}% of your questions right, Well now you know some new football facts!`;
+    let message = `You got ${percentRight}% of your questions right, Well... at least you know some new football facts!`;
     if (percentRight === 100) {
         message = `Amazing! You are an NFL Guru!!! You got ${percentRight}% of your questions right, CONGRATULATIONS MIGHTY ONE!`;
     }
