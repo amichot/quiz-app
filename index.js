@@ -1,3 +1,7 @@
+function myQuiz() {
+
+
+
 const questions = [
     {
         question: "In the 2017 NFL regular season who had the most passing yards?",
@@ -8,7 +12,8 @@ const questions = [
         d: "Tom Brady (NE)"
         },
 
-        correctAnswer: "d"
+        correctAnswer: "d",
+        answerText: "Tom Brady led the league with 4,577 passing yards! Philip Rivers came in second with 4,515 yards."
     },
 
     {
@@ -20,7 +25,8 @@ const questions = [
         d: "Broncos"
         },
 
-        correctAnswer: "b"
+        correctAnswer: "b",
+        answerText: "The Chiefs won the AFC West with a record of 10 - 6. The Jaguars won the AFC South."
     },
 
     {
@@ -32,7 +38,8 @@ const questions = [
         d: "6"
         },
 
-        correctAnswer: "a"
+        correctAnswer: "a",
+        answerText: "The Cleveland Browns did not win a single game in 2017, finishing the season 0 - 16."
     },
 
     {
@@ -44,7 +51,8 @@ const questions = [
         d: "Kenny Golladay (DET)"
         },
 
-        correctAnswer: "a"
+        correctAnswer: "a",
+        answerText: "Even though Alvin Kamara is a running back he led all rookies with 81 receptions during the 2017 regular season."
     },
 
     {
@@ -56,7 +64,8 @@ const questions = [
         d: "Stephen Gostkowski (NE)"
         },
 
-        correctAnswer: "d"
+        correctAnswer: "d",
+        answerText: "Stephen Gostkowski was the only kicker to kick a 62-yard field goal in 2017."
     },
 
     {
@@ -68,7 +77,8 @@ const questions = [
         d: "Von Miller (Den)"
         },
 
-        correctAnswer: "c"
+        correctAnswer: "c",
+        answerText: "Chandler Jones led the league with 17 sacks during the regular season."
     },
 
     {
@@ -80,7 +90,8 @@ const questions = [
         d: "J. J. Watt"
         },
 
-        correctAnswer: "d"
+        correctAnswer: "d",
+        answerText: "J.J. Watt raised 37 million dollars to help Houston recover from Hurricane Harvey"
     },
 
     {
@@ -92,7 +103,8 @@ const questions = [
         d: "Vikings"
         },
 
-        correctAnswer: "d"
+        correctAnswer: "d",
+        answerText: "The Vikings defense gave up an averaged of 275.9 yards per game."
     },
 
     {
@@ -104,7 +116,8 @@ const questions = [
         d: "Alex Smith (KC)"
         },
 
-        correctAnswer: "c"
+        correctAnswer: "c",
+        answerText: "In week 14 Roethlisberger threw for 506 yards against the Ravens making him the only Quarterback to throw for over 500 yards three times in his career."
     },
 
     {
@@ -116,13 +129,17 @@ const questions = [
         d: "Alvin Kamara (NO)"
         },
 
-        correctAnswer: "c"
+        correctAnswer: "c",
+        answerText: "Fournette ran for a 90-yard touchdown reaching a top speed of 22.05 MPH in week 5 against the Steelers."
     }
 ];
 
+let questionNumber = 0;
+let answersRight = 0;
 
 
 function generateItemElement(items, questionNumber) {
+    console.log(questionNumber)
     return `
         <span class="questionNumber">Question ${questionNumber} of 10</span>
         <p>${items.question}</p>
@@ -143,8 +160,8 @@ function generateItemElement(items, questionNumber) {
             <label for="choice4">${items.answers.d}</label>
         </div>
 
-        <div class="button-container">
-            <button class="button" type="submit">Submit Answer</button>
+        <div class="button-container js-quizButton-container">
+            <button class="button js-button" type="submit">Submit Answer</button>
         </div>
     `
 }
@@ -158,11 +175,11 @@ function generateQuestionsString(questions, questionNumber) {
 }
 
 function renderQuizQuestions() {
+    questionNumber ++;
     console.log("`renderShoppingList` ran");
-    let questionNumber = 1;
     const questionString = generateQuestionsString(questions, questionNumber);
     $(".js-quiz").html(questionString);
-    questionNumber ++;
+    
 }
 
 function handleStartQuiz() {
@@ -180,8 +197,25 @@ function hideElements() {
     } )
 }
 
+function generateAnswer(userAnswer) {
+
+}
+
+function checkAnswer(userAnswer) {
+    const question = questions[questionNumber - 1];
+    let response = `Sorry! The correct answer is ${question.correctAnswer}! `
+    if (question.correctAnswer === userAnswer) {
+        let response = "CORRECT!";
+    }
+}
+
 function handleAnswers() {
-    //leaving off point
+    $(".js-container").on("click", `.js-button`, function(event) {
+        console.log("`handleAnswers` ran");
+        let userAnswer = $(`input[name=question${questionNumber}]:checked`).val()
+        const answer = checkAnswer(userAnswer);
+    })
+    
 }
 
 
@@ -193,3 +227,7 @@ function handleQuiz() {
 }
 
 $(handleQuiz);
+
+}
+
+$(myQuiz);
