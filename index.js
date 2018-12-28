@@ -149,9 +149,10 @@ function generateItemElement(items, questionNumber) {
                 </div>
             </section>
             <section>
-                <ul>${items.question}
+                <ul>
+                    <p>${items.question}</p>
                     <li>
-                        <input type="radio" id="a" value="a" name="question${questionNumber}" checked>
+                        <input type="radio" id="a" value="a" name="question${questionNumber}" required>
                         <label for="a">${items.answers.a}</label>
                     </li>
                     <li>
