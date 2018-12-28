@@ -142,29 +142,37 @@ function generateItemElement(items, questionNumber) {
     console.log("generatingItemElements");
     return `
         <div class="js-remove">
-            <span class="questionNumber">Question ${questionNumber} of 10</span>
-            <span class="questionNumber">Answered Correct: ${answersRight} of ${questionNumber - 1}</span>
-            <p>${items.question}</p>
-            <div>
-                <input type="radio" id="a" value="a" name="question${questionNumber}">
-                <label for="choice1">${items.answers.a}</label>
-            </div>
-            <div>
-                <input type="radio" id="b" value="b" name="question${questionNumber}">
-                <label for="choice2">${items.answers.b}</label>
-            </div>
-            <div>
-                <input type="radio" id="c" value="c" name="question${questionNumber}">
-                <label for="choice3">${items.answers.c}</label>
-            </div>
-            <div>
-                <input type="radio" id="d" value="d" name="question${questionNumber}">
-                <label for="choice4">${items.answers.d}</label>
-            </div>
+            <section>
+                <div class="questionHeader">
+                    <span class="questionInfo">Question ${questionNumber} of 10</span>
+                    <span class="questionInfo">Answered Correct: ${answersRight} of ${questionNumber - 1}</span>
+                </div>
+            </section>
+            <section>
+                <ul>${items.question}
+                    <li>
+                        <input type="radio" id="a" value="a" name="question${questionNumber}" checked>
+                        <label for="a">${items.answers.a}</label>
+                    </li>
+                    <li>
+                        <input type="radio" id="b" value="b" name="question${questionNumber}">
+                        <label for="b">${items.answers.b}</label>
+                    </li>
+                    <li>
+                        <input type="radio" id="c" value="c" name="question${questionNumber}">
+                        <label for="c">${items.answers.c}</label>
+                    </li>
+                    <li>
+                        <input type="radio" id="d" value="d" name="question${questionNumber}">
+                        <label for="d">${items.answers.d}</label>
+                    </li>
 
-            <div class="button-container js-quizButton-container">
-                <button class="button js-button" type="submit">Submit Answer</button>
-            </div>
+                </ul>
+
+                <div class="button-container js-quizButton-container">
+                    <button class="button js-button" type="submit">Submit Answer</button>
+                </div>
+            </section>
         </div>
     `
 }
@@ -186,12 +194,12 @@ function renderQuizQuestions() {
     }
     else {
     const questionString = generateQuestionsString(questions, questionNumber);
-    $(".js-container").html(questionString);
+    $(".js-form-container").html(questionString);
     }
 }
 
 function handleStartQuiz() {
-    $(".js-container").on("click", `.js-start-button`, event => {
+    $(".js-form-container").on("click", `.js-start-button`, event => {
         console.log("`handleStartQuiz` ran");
         removeElements();
         renderQuizQuestions();
@@ -223,11 +231,11 @@ function getAnswer(userAnswer) {
     }
     const currentAnswer = generateAnswer(response)
     removeElements();
-    $(".js-container").html(currentAnswer);
+    $(".js-form-container").html(currentAnswer);
 }
 
 function handleAnswers() {
-    $(".js-container").on("click", `.js-button`, function(event) {
+    $(".js-form-container").on("click", `.js-button`, function(event) {
         console.log("`handleAnswers` ran");
         let userAnswer = $(`input[name=question${questionNumber}]:checked`).val()
         const answer = getAnswer(userAnswer);
@@ -265,7 +273,7 @@ function finalStatement() {
         message = `You got ${percentRight}% of your questions right, better luck next time!`;
     }
     const endingStatement = generateQuizEnd(message);
-    $(".js-container").html(endingStatement);
+    $(".js-form-container").html(endingStatement);
 }
 
 function HandlequizEnd() {
@@ -286,13 +294,13 @@ function generateStartScreen() {
 }
 
 function retakeQuiz() {
-        $(".js-container").on("click", `.js-retake-button`, function(event) {
+        $(".js-form-container").on("click", `.js-retake-button`, function(event) {
             console.log("`retakeQuiz` ran");
             questionNumber = 0;
             answersRight = 0;
             removeElements();
             const startScreen = generateStartScreen();
-            $(".js-container").html(startScreen);
+            $(".js-form-container").html(startScreen);
         })
 }
 
