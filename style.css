@@ -8,10 +8,22 @@
   
   html {
     font: 80% 'Roboto', helvetica, sans-serif;
+    height: 100%;
+    overflow: hidden;
+    
+  }
+
+  body {
+      height: 100%;
+      background-image: url("images/american-football-field-background.jpg");
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
   }
 
 .banner {
     text-align: center;
+    color: whitesmoke;
 }
 
 fieldset {
@@ -27,7 +39,7 @@ fieldset {
     flex-direction: column;
     justify-content: center;
     align-content: center;
-    background: #efefef;
+    background: #afafaf;
     margin: 2rem auto 1rem auto;
     padding: 1rem;
     max-width: 25rem;
@@ -48,10 +60,6 @@ fieldset {
       padding-top: 1rem;
   }
 
-  .hidden {
-      display: none;
-  }
-
   .questionHeader {
       display: flex;
       flex-direction: row;
@@ -60,8 +68,32 @@ fieldset {
       padding-bottom: .5rem;
   }
 
+  .answerResponse {
+      text-align: center;
+      font-weight: bold;
+  }
+
   .questionInfo {
       margin-top: 0;
+  }
+
+  .imgContainer {
+      display: flex;
+      justify-content: center;
+  }
+
+  .button {
+    border-radius: 10px;
+    background-color: black;
+    color: white;
+  }
+
+  .button:hover {
+    font-weight: bold;
+  }
+
+  li:hover {
+    background-color: rgb(201, 197, 197);
   }
 
   @media(min-width: 400px) {

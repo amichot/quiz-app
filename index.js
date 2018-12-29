@@ -200,7 +200,7 @@ function renderQuizQuestions() {
 }
 
 function handleStartQuiz() {
-    $(".js-form-container").on("click", `.js-start-button`, event => {
+    $(".js-form-container").on("click keydown", `.js-start-button`, event => {
         console.log("`handleStartQuiz` ran");
         removeElements();
         renderQuizQuestions();
@@ -212,9 +212,10 @@ function removeElements() {
         $(".js-remove").remove();
 }
 
-function generateAnswer(response) {
+function generateAnswer(response, img) {
     return `
         <div class="js-remove">
+            <div class="imgContainer">${img}</div>
             <p>${response}</p>
             <div class="button-container js-quizButton-container">
                 <button class="button js-start-button" type="button">Next Question</button>
@@ -225,21 +226,25 @@ function generateAnswer(response) {
 
 function getAnswer(userAnswer) {
     const question = questions[questionNumber - 1];
-    let response = `Sorry! The correct answer is ${question.correctAnswer}! ${question.answerText}`
+    let response = `<p class="answerResponse">Sorry!</p> The correct answer is ${question.correctAnswer}! ${question.answerText}`
+    let img = `<img src="images/wrong.png" alt="Wrong Sign" height="52" width="52"></img>`;
     if (question.correctAnswer === userAnswer) {
         answersRight += 1;
-        response = `CORRECT! ${question.answerText}`;
+        response = `<p class="answerResponse">CORRECT!</p> ${question.answerText}`;
+        img = `<img src="images/right.png" alt="Right Sign" height="52" width="52"></img>`;
     }
-    const currentAnswer = generateAnswer(response)
+    const currentAnswer = generateAnswer(response, img)
     removeElements();
-    $(".js-form-container").html(currentAnswer);
+    return currentAnswer;
 }
 
 function handleAnswers() {
-    $(".js-form-container").on("click", `.js-button`, function(event) {
+    $(".js-form-container").on("submit", function(event) {
+        event.preventDefault();
         console.log("`handleAnswers` ran");
         let userAnswer = $(`input[name=question${questionNumber}]:checked`).val()
         const answer = getAnswer(userAnswer);
+        $(".js-form-container").html(answer);
     })
     
 }
@@ -295,7 +300,7 @@ function generateStartScreen() {
 }
 
 function retakeQuiz() {
-        $(".js-form-container").on("click", `.js-retake-button`, function(event) {
+        $(".js-form-container").on("click enter", `.js-retake-button`, function(event) {
             console.log("`retakeQuiz` ran");
             questionNumber = 0;
             answersRight = 0;
