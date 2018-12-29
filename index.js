@@ -268,7 +268,7 @@ function finalStatement() {
     }
 
     else if (percentRight >= 80) {
-        message = `The force appears to be with you. You got ${percentRight}% of your questions right, CoNgRaTuLaTiOnS!`;
+        message = `The force appears to be with you. You got ${percentRight}% of your questions right, CONGRATULATIONS!`;
     }
 
     else if (percentRight >= 60) {
